@@ -3,7 +3,6 @@ from datetime import datetime
 from win10toast import ToastNotifier
 import json
 
-#API_KEY = 'AIzaSyAHL_WhxvWY1Emyv9g8u3-RXdhpIsUfNL8'
 def getAPIKey():
     api_key_file = open("api_key.txt", "r")
     API_KEY = api_key_file.read()
