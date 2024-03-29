@@ -2,56 +2,76 @@ import googlemaps
 from datetime import datetime
 from win10toast import ToastNotifier
 import json
+import csv
 
-def getAPIKey():
-    api_key_file = open("api_key.txt", "r")
-    API_KEY = api_key_file.read()
-    api_key_file.close()
+standard_route_file = 'standard_route.json'
+request_file = 'trip_details.json'
+current_route_file = 'current_route.json'
+
+def getAPIKey(file):
+    with open(file, "r") as f: 
+        API_KEY = f.read()
     return API_KEY
 
-gmaps = googlemaps.Client(getAPIKey())
-
 # toaster = ToastNotifier()
-
-
 # toaster.show_toast("Commute", "A really good message", duration = 5)
 
+def loadJson(jsonFile): 
+    with open(jsonFile, "r") as file: 
+        contents = json.load(file)
+    return contents
 
-# Parameters to be passed to API
-origin = "156 Hillside St. Boston, MA"
-destination = "289 Great Rd. Acton, MA"
-waypoints = ["Route 9"]
-avoid = ["tolls"]
+def directionsGet(request_file, results_file = ''): 
+    gmaps = googlemaps.Client(request['api_key'])
+    # Parameters to be passed to API
+    directions_result = gmaps.directions(trip['origin'],
+                                         trip['destination'],
+                                         mode=trip['mode'],
+                                         departure_time=datetime.now(), 
+                                         avoid = trip['avoid']
+                                         )
+    if results_file == '': 
+        return directions_result
+    else:
+        with open(results_file, "w") as f:
+            json.dump(directions_result, f)
+        return directions_result
 
-directions_result = gmaps.directions("1578 Tremont St. Boston, MA`",
-                                     "289 Great Rd. Acton, MA",
-                                     mode="driving",
-                                     departure_time=datetime.now(), 
-                                     avoid = "tolls"
-                                     )
+def getWaypoints(directions): 
+    waypoints = [step.get("end_location") for leg in directions[0]["legs"] for step in leg["steps"]]
+    return waypoints
 
-formatted_results  = json.dumps(directions_result, indent = 4)
-with open("standard_route.json", "w") as f:
-    json.dump(directions_result, f)
-
-with open("standard_route.json", "r") as f:
-    route1 = json.load(f)
-
-with open("route2.json", "r") as f:
-    standard_route = json.load(f)
-
-
-waypoints_route1 = [step.get("end_location") for leg in route1[0]["legs"] for step in leg["steps"]]
-waypoints_route2 = [step.get("end_location") for leg in route2[0]["legs"] for step in leg["steps"]]
-
-if waypoints_route1 == waypoints_route2:
-    print("They're the same!!")
-else: 
-    print("They're different :(")
-
-
-#print(formatted_results)
-distance = (directions_result[0]['legs'][0]['duration_in_traffic']['text'])
-print("Duration in traffic: ", distance)
+# #print(formatted_results)
+# distance = (directions_result[0]['legs'][0]['duration_in_traffic']['text'])
+# print("Duration in traffic: ", distance)
 
 #print(directions_result)
+
+#Print formatted json data
+def printJson(data):
+    print(json.dumps(data, indent=4))
+
+def main(): 
+    #standard_route = directionsGetStore(trip_details, standard_route_file)
+    
+    standard_route = loadJson(standard_route_file)
+    request = loadJson(request_file)
+    current_route = directionsGet(trip_details)
+    printJson(current_route)
+    current_waypoints = getWaypoints(current_route)
+    standard_waypoints = getWaypoints(standard_route)
+    printJson(current_waypoints)
+
+    if current_waypoints == standard_waypoints: 
+        print("Take standard route home")
+    else: 
+        print("Go home another way")
+
+    #getDirections(trip_details, current_route)
+    #if compareRoute(standard_route, current_route): 
+        #print("They're the same!!!!")
+    #else:
+        #print("They're not the same!!!!")
+
+
+main()
