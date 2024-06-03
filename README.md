@@ -9,7 +9,9 @@ This Python script uses the Google Maps API to get directions and monitor traffi
 - win10toast Python library
 ## Installation
 1. Install the required Python libraries:  
-        pip install googlemaps win10toast  
+   ```bash  
+    pip install googlemaps win10toast  
+    ```
    
 3. Ensure you have your Google Maps API key saved in a text file.  
 
@@ -21,7 +23,8 @@ trip_details.json: (Optional) File to save the current route details if needed.
 standard_route.json and current_route.json  
 These files should follow the structure provided by the Google Maps Directions API response.  
 
-### trip_details.json  
+### `trip_details.json`  
+```
 {  
     "api_key": "YOUR_API_KEY_HERE",  
     "origin": "Starting address or coordinates",  
@@ -30,4 +33,5 @@ These files should follow the structure provided by the Google Maps Directions A
     "avoid": ["tolls", "ferries", "highways"], // optional  
     "alternate_msg": "Alternate route detected due to traffic.",  
     "standard_msg": "Your route is clear."  
-}  
+} 
+```
