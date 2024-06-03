@@ -9,7 +9,7 @@ This Python script uses the Google Maps API to get directions and monitor traffi
 - win10toast Python library
 ## Installation
 1. Install the required Python libraries:  
-        pip install googlemaps win10toast
+        pip install googlemaps win10toast  
    
 3. Ensure you have your Google Maps API key saved in a text file.  
 
@@ -19,7 +19,7 @@ request_file.json: Contains the request details for the trip.
 trip_details.json: (Optional) File to save the current route details if needed.  
 ## JSON File Structure  
 standard_route.json and current_route.json  
-These files should follow the structure provided by the Google Maps Directions API response.
+These files should follow the structure provided by the Google Maps Directions API response.  
 
 ### trip_details.json  
 {  
