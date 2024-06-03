@@ -2,6 +2,8 @@
 Description
 This Python script uses the Google Maps API to get directions and monitor traffic conditions for a specified route. It compares the current route's waypoints with a standard route's waypoints to determine if there are any deviations due to traffic. If there are deviations or if the trip duration exceeds a certain threshold, it displays a desktop notification using win10toast.
 
+This script can be configured to run periodically. I use this daily to let me know if there is traffic on my commute home, or if there is a shorter alternative to my usual drive home. The automatic alerts are nice because I don't have to enter the trip into a navigation app. 
+
 ## Prerequisites
 - Python 3.x
 - Google Maps API key
@@ -20,8 +22,6 @@ standard_route.json: Contains the standard route information in JSON format.
 request_file.json: Contains the request details for the trip.  
 trip_details.json: (Optional) File to save the current route details if needed.  
 ## JSON File Structure  
-standard_route.json and current_route.json  
-These files should follow the structure provided by the Google Maps Directions API response.  
 
 #### `trip_details.json`  
 ```
