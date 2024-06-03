@@ -23,7 +23,7 @@ trip_details.json: (Optional) File to save the current route details if needed.
 standard_route.json and current_route.json  
 These files should follow the structure provided by the Google Maps Directions API response.  
 
-### `trip_details.json`  
+#### `trip_details.json`  
 ```
 {  
     "api_key": "YOUR_API_KEY_HERE",  
